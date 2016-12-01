@@ -2,8 +2,13 @@ package com.sawyer.framework.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,10 +43,31 @@ public class TestController
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	@ApiOperation(value = "test get", notes = "test get")
 	public List<Demo> get(
-			@ApiParam(required = false, name = "name", value = "姓名") @RequestParam(name = "name") String name)
+			@ApiParam(required = false, name = "name", value = "姓名") 
+			@RequestParam(name = "name") String name,
+			@RequestHeader ("host") String hostName)
 	{
 		PageHelper.startPage(1,1);
-		return demoService.likeName(name);
+		return demoService.joinTest(name);
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/validate", method = RequestMethod.GET)
+	@ApiOperation(value = "test validate", notes = "test validate")
+	public String validate(@RequestBody @Valid Demo demo)
+	{
+		return "OK";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/get2", method = RequestMethod.GET)
+	public String get(
+			)
+	{
+		System.out.println("==============");
+		return "OK";
 	}
 
 }

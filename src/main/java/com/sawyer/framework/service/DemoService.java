@@ -18,4 +18,9 @@ public class DemoService
 	{
 		return demoMappper.likeName(name);
 	}
+	
+	public List<Demo> joinTest(String name)
+	{
+		return demoMappper.joinTest(name);
+	}
 }
